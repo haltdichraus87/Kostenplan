@@ -25,3 +25,7 @@ export const MCP_SERVER_URL =
 export const TOKEN_STORE_PATH = path.join(rootDir, ".mcp", "tokens.json");
 
 export const OAUTH_CALLBACK_PORT = Number(process.env.MCP_OAUTH_CALLBACK_PORT ?? 8765);
+
+// Static API token, e.g. a personal access token issued by the easy-mcp-ai
+// plugin. Preferred over the OAuth flow when set.
+export const STATIC_TOKEN = process.env.WORDPRESS_MCP_TOKEN || null;

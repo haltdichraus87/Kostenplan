@@ -1,8 +1,12 @@
-import { MCP_SERVER_URL } from "./config.js";
+import { MCP_SERVER_URL, STATIC_TOKEN } from "./config.js";
 import { getValidAccessToken } from "./oauth.js";
 
 let sessionId = null;
 let nextId = 1;
+
+function getAccessToken() {
+  return STATIC_TOKEN ? Promise.resolve(STATIC_TOKEN) : getValidAccessToken();
+}
 
 async function parseResponseBody(res) {
   const contentType = res.headers.get("content-type") ?? "";
@@ -21,7 +25,7 @@ async function parseResponseBody(res) {
 }
 
 async function rpc(method, params) {
-  const accessToken = await getValidAccessToken();
+  const accessToken = await getAccessToken();
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json, text/event-stream",
