@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "wordpress": {
+      "type": "http",
+      "url": "https://ck.4lima.de/wp-json/easy-mcp-ai/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer ${WORDPRESS_MCP_TOKEN}"
+      }
+    }
+  }
+}

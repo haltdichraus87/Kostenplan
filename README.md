@@ -6,7 +6,32 @@ server. It handles OAuth 2.1 discovery, dynamic client registration, and the
 PKCE authorization-code flow, then talks MCP (JSON-RPC over HTTP) to list and
 call tools exposed by the WordPress site.
 
-## Setup
+## Use as a Claude Code MCP server
+
+`.mcp.json` registers the endpoint as a project-scoped MCP server for Claude
+Code. It reads the token from the `WORDPRESS_MCP_TOKEN` environment variable
+(set it in your shell or `.env`, then export it before launching Claude
+Code):
+
+```bash
+export WORDPRESS_MCP_TOKEN=your-api-token
+claude
+```
+
+Equivalent one-off command (adds the same server via the CLI instead of the
+committed `.mcp.json`):
+
+```bash
+claude mcp add --transport http wordpress https://ck.4lima.de/wp-json/easy-mcp-ai/v1/mcp \
+  --header "Authorization: Bearer your-api-token"
+```
+
+## Standalone OAuth CLI
+
+For use outside Claude Code (e.g. scripting), this repo also includes a
+dependency-free OAuth 2.1 + MCP client.
+
+### Setup
 
 ```bash
 cp .env.example .env   # adjust MCP_SERVER_URL if needed
@@ -15,7 +40,7 @@ cp .env.example .env   # adjust MCP_SERVER_URL if needed
 No dependencies to install — everything uses Node's built-in `fetch`,
 `http`, and `crypto` modules (Node >= 18.17).
 
-## Usage
+### Usage
 
 ```bash
 node bin/kostenplan-mcp.js login   # opens an authorization URL to visit in a browser
